@@ -7,6 +7,11 @@ const theme = document.querySelector('#theme');
 const themeModal = document.querySelector('.customize__theme');
 const fontSizes = document.querySelectorAll('.choose__size span');
 var root = document.querySelector(':root');
+const colorPalette = document.querySelectorAll('.choose__color span');
+const bg1 = document.querySelector('.bg--1');
+const bg2 = document.querySelector('.bg--2');
+const bg3 = document.querySelector('.bg--3');
+
 
 
 // sidebar
@@ -84,7 +89,7 @@ const removeClassSelector = () => {
 };
 
 fontSizes.forEach(size => {
-
+ 
     size.addEventListener('click', () => {
       removeClassSelector();
       let fontSize;
@@ -114,3 +119,86 @@ fontSizes.forEach(size => {
     document.querySelector('html').style.fontSize = fontSize;
     });
 }); 
+
+// color
+
+const changeActiveColorClass = () => {
+    colorPalette.forEach(colorPicker => {
+        colorPicker.classList.remove('active');
+    });
+};
+
+colorPalette.forEach(color => {
+    color.addEventListener('click', () => {
+
+        let primary;
+        
+        changeActiveColorClass();
+
+        if (color.classList.contains('color--1')) {
+            primaryHue = 252;
+        } else if (color.classList.contains('color--2')) {
+            primaryHue = 52;
+        } else if (color.classList.contains('color--3')) {
+            primaryHue = 352;
+            
+        } else if (color.classList.contains('color--4')) {
+            primaryHue = 152;
+            
+        } else if (color.classList.contains('color--5')) {
+            primaryHue = 202;
+        };
+        
+        color.classList.add('active');
+        root.style.setProperty('--primary-color-hue', primaryHue);
+    });
+});
+
+// bg color
+
+let lightColorLightness;
+let whiteColorLightness;
+let darkColorLightness;
+
+const changeBG = () => {
+    root.style.setProperty('--light-color-lightness', lightColorLightness);
+    root.style.setProperty('--white-color-lightness', whiteColorLightness);
+    root.style.setProperty('--dark--color-lightness', darkColorLightness);
+}
+
+bg1.addEventListener('click', () => {
+    darkColorLightness = '17%';
+    whiteColorLightness = '100%';
+    lightColorLightness = '95%';
+
+    bg1.classList.add('active');
+
+    bg3.classList.remove('active');
+    bg2.classList.remove('active');
+    changeBG();
+})
+
+
+bg2.addEventListener('click', () => {
+    darkColorLightness = '95%';
+    whiteColorLightness = '20%';
+    lightColorLightness = '15%';
+
+    bg2.classList.add('active');
+
+    bg1.classList.remove('active');
+    bg3.classList.remove('active');
+    changeBG();
+})
+
+bg3.addEventListener('click', () => {
+    darkColorLightness = '95%';
+    whiteColorLightness = '10%';
+    lightColorLightness = '0%';
+
+    bg3.classList.add('active');
+
+    bg1.classList.remove('active');
+    bg2.classList.remove('active');
+    changeBG();
+})
